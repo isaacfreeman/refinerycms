@@ -7,8 +7,7 @@ module Refinery
                     :dragonfly_secret, :javascripts, :stylesheets,
                     :s3_bucket_name, :s3_region, :s3_access_key_id,
                     :s3_secret_access_key, :force_ssl, :backend_route,
-                    :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts,
-                    :visual_editor_javascripts, :visual_editor_stylesheets
+                    :dragonfly_custom_backend_class, :dragonfly_custom_backend_opts
 
     self.rescue_not_found = false
     self.s3_backend = false
@@ -27,8 +26,6 @@ module Refinery
     self.backend_route = "refinery"
     self.dragonfly_custom_backend_class = ''
     self.dragonfly_custom_backend_opts = {}
-    self.visual_editor_javascripts = []
-    self.visual_editor_stylesheets = []
 
     def config.register_javascript(name)
       self.javascripts << name
@@ -38,22 +35,10 @@ module Refinery
       self.stylesheets << Stylesheet.new(*args)
     end
 
-    def config.register_visual_editor_javascript(name)
-      self.visual_editor_javascripts << name
-    end
-
-    def config.register_visual_editor_stylesheet(*args)
-      self.visual_editor_stylesheets << Stylesheet.new(*args)
-    end
-
     class << self
       def backend_route
         # prevent / at the start.
         config.backend_route.to_s.gsub(%r{\A/}, '')
-      end
-
-      def backend_path
-        "/#{backend_route}"
       end
 
       def clear_javascripts!
@@ -77,7 +62,7 @@ module Refinery
       end
 
       def wymeditor_whitelist_tags=(tags)
-        raise "Please ensure refinerycms-wymeditor is being used and use Refinery::Wymeditor.whitelist_tags instead of Refinery::Core.wymeditor_whitelist_tags"
+        raise "Please use Refinery::Wymeditor.whitelist_tags instead of Refinery::Core.wymeditor_whitelist_tags"
       end
     end
 
