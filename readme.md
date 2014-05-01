@@ -1,14 +1,10 @@
 # Refinery CMS
 
-__An open source content management system for Rails 4.1+__
+__An open source Ruby on Rails content management system for Rails 3.__
 
 More information at [http://refinerycms.com](http://refinerycms.com)
 
-[![Build Status](https://travis-ci.org/refinery/refinerycms.svg?branch=master)](https://travis-ci.org/refinery/refinerycms)  [![Code Climate](https://codeclimate.com/github/refinery/refinerycms.svg)](https://codeclimate.com/github/refinery/refinerycms)  [![Coverage Status](https://img.shields.io/coveralls/refinery/refinerycms.svg)](https://coveralls.io/r/refinery/refinerycms?branch=master)
-
-You can chat with us using Gitter:
-
-[![Gitter chat](https://badges.gitter.im/refinery/refinerycms.svg)](https://gitter.im/refinery/refinerycms)
+[![Build Status](https://travis-ci.org/refinery/refinerycms.png?branch=master)](https://travis-ci.org/refinery/refinerycms)  [![Code Climate](https://codeclimate.com/github/refinery/refinerycms.png)](https://codeclimate.com/github/refinery/refinerycms)
 
 ## Requirements
 
@@ -28,10 +24,6 @@ If you're new to Refinery, start with this guide:
 
 * __[Getting Started](http://refinerycms.com/guides/getting-started)__
 
-If you want to use Rails 4.1.x with Refinery now, install using this template:
-
-    rails new app_name -m http://refinerycms.com/t/edge
-
 ## What's it good at?
 
 __Refinery is great for sites where the client needs to be able to update their website themselves__ without being bombarded with anything too complicated.
@@ -45,9 +37,9 @@ Unlike other content managers, Refinery is truly __aimed at the end user__ makin
 * Sticks to __"the Rails way"__ as much as possible; we don't force you to learn new templating languages.
 * Uses [jQuery](http://jquery.com/) for fast and concise Javascript.
 
-![Refinery Pages UI](http://refinerycms.com/system/images/0000/0576/dashboard.png)
+![Refinery Dashboard](http://refinerycms.com/system/images/0000/0576/dashboard.png)
 
-Wanna see Refinery for yourself? [Try the demo](http://demo.refinerycms.com/refinery).
+Wanna see Refinery for yourself? [Try the demo](http://demo.refinerycms.com/refinery)
 
 ## Help and Documentation
 
@@ -55,9 +47,8 @@ Wanna see Refinery for yourself? [Try the demo](http://demo.refinerycms.com/refi
 * [Guides](http://refinerycms.com/guides)
 * [Google Group Discussion](http://group.refinerycms.org)
 * [IRC Channel](http://refinerycms.com/guides/how-to-get-help#irc-channel)
-* [Gitter chat](https://gitter.im/refinery/refinerycms)
 * [GitHub repository](https://github.com/refinery/refinerycms)
-* [Developer/API documentation](http://rubydoc.info/github/refinery/refinerycms)
+* [Developer/API documentation](http://api.refinerycms.org)
 * [Twitter Account](https://twitter.com/refinerycms)
 
 ## Features
@@ -73,6 +64,10 @@ Wanna see Refinery for yourself? [Try the demo](http://demo.refinerycms.com/refi
 * Upload and link to resources such as PDF documents.
 * Uses the popular [Dragonfly](https://github.com/markevans/dragonfly).
 * Supports storage on Amazon S3.
+
+### Dashboard
+
+* Get an overview of what has been updated recently and see recent inquiries.
 
 ### Authentication & Users
 
