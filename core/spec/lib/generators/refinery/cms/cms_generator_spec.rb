@@ -11,19 +11,24 @@ module Refinery
 
       dir = "#{destination_root}/config/environments"
       FileUtils.mkdir_p(dir)
-      File.write "#{dir}/development.rb", <<-SPEC
+      File.open("#{dir}/development.rb", "w") do |file|
+        file.write <<-SPEC
 Dummy::Application.configure do
   config.action_mailer.test = true
 end
-      SPEC
+        SPEC
+      end
 
-      File.write "#{dir}/test.rb", <<-SPEC
+      File.open("#{dir}/test.rb", "w") do |file|
+        file.write <<-SPEC
 Dummy::Application.configure do
   # config.action_mailer.test = true
 end
-      SPEC
+        SPEC
+      end
 
-      File.write "#{dir}/production.rb", <<-SPEC
+      File.open("#{dir}/production.rb", "w") do |file|
+        file.write <<-SPEC
 Dummy::Application.configure do
   config.action_mailer.test = true
   config.action_mailer.check = {
@@ -31,14 +36,15 @@ Dummy::Application.configure do
     :check => true
   }
 end
-      SPEC
+        SPEC
+      end
 
       copy_routes
       run_generator %w[--skip-db --skip-migrations]
     end
 
     specify do
-      expect(destination_root).to have_structure {
+      destination_root.should have_structure {
         directory "app" do
           directory "decorators" do
             directory "controllers" do
@@ -68,17 +74,20 @@ end
 
     describe "#ensure_environments_are_sane" do
       it "wraps single line config.action_mailer setting" do
-        expect(File.read("#{destination_root}/config/environments/development.rb")).to eq <<-SPEC
+        File.open("#{destination_root}/config/environments/development.rb") do |file|
+          file.read.should eq <<-SPEC
 Dummy::Application.configure do
   if config.respond_to?(:action_mailer)
     config.action_mailer.test = true
   end
 end
-        SPEC
+          SPEC
+        end
       end
 
       it "wraps multi line config.action_mailer settings" do
-        expect(File.read("#{destination_root}/config/environments/production.rb")).to eq <<-SPEC
+        File.open("#{destination_root}/config/environments/production.rb") do |file|
+          file.read.should eq <<-SPEC
 Dummy::Application.configure do
   if config.respond_to?(:action_mailer)
     config.action_mailer.test = true
@@ -88,13 +97,16 @@ Dummy::Application.configure do
     }
   end
 end
-        SPEC
+          SPEC
+        end
       end
     end
 
     describe "#mount!" do
       it 'adds Refinery to routes.rb' do
-        expect(File.read("#{destination_root}/config/routes.rb")).to match /Refinery/
+        File.open("#{destination_root}/config/routes.rb") do |file|
+          file.read.should match /Refinery/
+        end
       end
     end
 
