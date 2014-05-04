@@ -1,8 +1,25 @@
-@import '_mixins';
-
-$menu_width: 10%;
-$standard_rounding: 5px;
-
+/*==================================
+=     Mixins
+==================================*/
+@mixin rounded($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+@mixin top-rounded($radius) {
+  border-radius-top: $radius;
+  -moz-border-radius-topleft: $radius;
+  -moz-border-radius-topright: $radius;
+  -webkit-border-top-left-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+}
+@mixin bottom-rounded($radius) {
+  border-radius-bottom: $radius;
+  -moz-border-radius-bottomleft: $radius;
+  -moz-border-radius-bottomright: $radius;
+  -webkit-border-bottom-left-radius: $radius;
+  -webkit-border-bottom-right-radius: $radius;
+}
 p {
   font-size: 14px;
   line-height: 18px;
@@ -26,33 +43,14 @@ acronym {
 label[for] {
   cursor: pointer;
 }
-#admin_container, #login_container, #site_bar_content {
-  margin: 0px auto 15px auto;
+#page_container, #site_bar_content, header {
+  margin: 0px auto 10px auto;
   text-align: left;
-}
-#admin_container, #login_container {
-  @include rounded($standard_rounding);
-  position: relative;
-  height: 100%;
-  margin-top: 15px;
-}
-#login_container {
-  background: white;
-  width: 620px;
-}
-#admin_container {
-  @include faux_columns_2($menu_width, transparent, white);
-  @include admin_background();
-  width: 960px;
+  width: 990px;
 }
 #page_container {
-  @include box-sizing(border-box);
-  @include right-rounded($standard_rounding);
-  background-color: white;
+  width: 960px;
   padding: 30px 15px;
-  position: relative;
-  float: left;
-  width: 100% - $menu_width;
 }
 #site_bar_content {
   margin-bottom: 0px;
@@ -77,7 +75,7 @@ select.widest {
 }
 #actions {
   float: right;
-  width: 25%;
+  width: 30.7%;
   padding-left: 15px;
   padding-top: 0px;
   ul {
@@ -196,7 +194,6 @@ hr {
 .flash.flash_alert a, .flash.flash_alert a:hover {
   display: none;
 }
-
 noscript .flash.flash_error a, noscript .flash.flash_error a:hover,
 noscript .flash.flash_alert a, noscript .flash.flash_alert a:hover {
   display: inline;
@@ -206,6 +203,9 @@ noscript .flash.flash_alert a, noscript .flash.flash_alert a:hover {
   position: absolute;
   right: 9px;
   top: 7px;
+}
+.flash.flash_message a#flash_close {
+  top: 21px;
 }
 a {
   color: #41403C;
@@ -268,7 +268,7 @@ a:hover {
 a#site_bar_refinery_cms_logo {
   left: 448px;
 }
-#content {
+#content, #page_container {
   background-color: white;
 }
 header, footer, nav {
@@ -280,10 +280,15 @@ header, footer, nav {
   font-size: 20px;
   line-height:22px
 }
-#login_container {
+body.login {
+  #site_bar_content {
+    width: 650px;
+    a#site_bar_refinery_cms_logo {
+      left: 247px;
+    }
+  }
   #page_container {
-    background: transparent;
-    width: 100%;
+    width: 620px;
     div.remember_me label, label.inline {
       display: inline;
     }
@@ -301,17 +306,16 @@ header, footer, nav {
   }
   header {
     background: #eaeaea;
+    width: 620px;
+    padding: 0px 15px 1em;
     height: auto;
-    float: none;
-    width: 100%;
-    @include top-rounded($standard_rounding);
     h1 {
       color: #41403c;
       vertical-align: middle;
       text-align: center;
       font-weight: bold;
       font-size: 18px;
-      padding-bottom: 15px;
+      padding-bottom: 0px;
       line-height: 30px;
       padding-top: 15px;
     }
@@ -360,19 +364,39 @@ div.field.checkbox_access {
     font-weight: normal;
   }
 }
-#menu, {
+#menu, header .jcarousel-container {
   display: block;
   margin: 0px;
   padding: 0px;
   position: absolute;
+  bottom: -1px;
+  left: 0px;
+  right: 0px;
   background: transparent;
 }
 header {
-  float: left;
+  height: 60px;
+  position: relative;
   margin-bottom: 0px;
-  width: $menu_width;
   a, a:hover {
     border-bottom: 0px none;
+  }
+  .jcarousel-container {
+    position: absolute !important;
+    .jcarousel-prev, .jcarousel-next {
+      position: absolute;
+      top: 13px;
+      cursor: pointer;
+    }
+    .jcarousel-prev {
+      left: -20px;
+    }
+    .jcarousel-next {
+      right: -20px;
+    }
+    .jcarousel-prev-disabled, .jcarousel-next-disabled {
+      display: none !important;
+    }
   }
   #logo {
     position: absolute;
@@ -395,8 +419,6 @@ header {
   }
 }
 #menu {
-  display: block;
-  position: relative;
   &.ui-sortable a {
     cursor: move;
   }
@@ -404,41 +426,34 @@ header {
     cursor: pointer;
   }
   a {
-    @include left-rounded($standard_rounding);
-    @include box-sizing(border-box);
     display: block;
     padding: 7px 13px;
     font-size: 13px;
     background: image_url('refinery/nav_inactive_background.png') transparent repeat;
-    margin-top: 1px;
+    margin-top:4px;
     color: white;
     font-weight: normal;
+    float: left;
     margin-right: 2px;
     position: relative;
-    width: 100%;
-    &:first-child {
-      margin-top: 0;
-    }
     &.active, &:hover, &:focus {
       background-color: white;
       color: #ff5500;
     }
+    &.active {
+      padding: 9px 13px;
+      margin-top: 0px;
+    }
   }
 }
-#menu a#menu_reorder, #menu a#menu_reorder_done {
+#menu a#menu_reorder, header #menu a#menu_reorder_done {
   height: 14px;
   width: 14px;
-  margin-top: 1px;
-  margin-right: 0;
+  margin-top: 11px;
   padding: 6px;
   cursor: pointer;
   vertical-align: middle;
   text-align: center;
-  float: right;
-  @include box-sizing(content-box);
-}
-#menu a#menu_reorder_done {
-  background: white;
 }
 pre {
   margin: 0;
@@ -675,32 +690,22 @@ label.stripped {
   display:block;
 }
 #records.files .record .title.pdf, #dialog_main #resource_file_area .pages_list ul li a.page_link.pdf {
-  background-image: image_url('refinery/icons/pdf.png');
+	background-image: image_url('refinery/icons/pdf.png');
 }
-#records.files .record .title.jpg,
-#records.files .record .title.gif,
-#records.files .record .title.jpeg,
-#records.files .record .title.png,
-#records.files .record .title.tiff,
-#dialog_main #resource_file_area .pages_list ul li a.page_link.jpg,
-#dialog_main #resource_file_area .pages_list ul li a.page_link.jpeg,
-#dialog_main #resource_file_area .pages_list ul li a.page_link.gif,
-#dialog_main #resource_file_area .pages_list ul li a.page_link.png,
-#dialog_main #resource_file_area .pages_list ul li a.page_link.tiff {
-  background-image: image_url('refinery/icons/img.png');
+#records.files .record .title.jpg, #records.files .record .title.gif, #records.files .record .title.jpeg, #records.files .record .title.png, #records.files .record .title.tiff, #dialog_main #resource_file_area .pages_list ul li a.page_link.jpg, #dialog_main #resource_file_area .pages_list ul li a.page_link.jpeg, #dialog_main #resource_file_area .pages_list ul li a.page_link.gif, #dialog_main #resource_file_area .pages_list ul li a.page_link.png, #dialog_main #resource_file_area .pages_list ul li a.page_link.tiff {
+	background-image: image_url('refinery/icons/img.png');
 }
-
 #records.files .record .title.doc, #records.files .record .title.pages, #records.files .record .title.docx, #dialog_main #resource_file_area .pages_list ul li a.page_link.doc, #dialog_main #resource_file_area .pages_list ul li a.page_link.docx, #dialog_main #resource_file_area .pages_list ul li a.page_link.pages {
-  background-image: image_url('refinery/icons/doc.png');
+	background-image: image_url('refinery/icons/doc.png');
 }
 #records.files .record .title.ppt, #records.files .record .title.keynote, #dialog_main #resource_file_area .pages_list ul li a.page_link.ppt, #dialog_main #resource_file_area .pages_list ul li a.page_link.keynote {
-  background-image: image_url('refinery/icons/ppt.png');
+	background-image: image_url('refinery/icons/ppt.png');
 }
 #records.files .record .title.xls, #records.files .record .title.numbers, #dialog_main #resource_file_area .pages_list ul li a.page_link.xls, #dialog_main #resource_file_area .pages_list ul li a.page_link.numbers {
-  background-image: image_url('refinery/icons/xls.png');
+	background-image: image_url('refinery/icons/xls.png');
 }
 #records.files .record .title.zip, #records.files .record .title.rar, #dialog_main #resource_file_area .pages_list ul li a.page_link.zip, #dialog_main #resource_file_area .pages_list ul li a.page_link.rar {
-  background-image: image_url('refinery/icons/zip.png');
+	background-image: image_url('refinery/icons/zip.png');
 }
 #records.files .record .title.mp3, #records.files .record .title.wav, #records.files .record .title.aiff, #records.files .record .title.m4a, #dialog_main #resource_file_area .pages_list ul li a.page_link.mp3, #dialog_main #resource_file_area .pages_list ul li a.page_link.wav, #dialog_main #resource_file_area .pages_list ul li a.page_link.aiff, #dialog_main #resource_file_area .pages_list ul li a.page_link.m4a {
   background-image: image_url('refinery/icons/music.png');
@@ -827,7 +832,7 @@ body.dialog form {
   width: 100% !important;
 }
 .visual_editor_dialog_table {
-  height: 250px;
+	height: 250px;
 }
 .dialog {
   #dialog_main {
@@ -1058,7 +1063,7 @@ a img {
 .add_icon             { background-image: image_url('refinery/icons/add.png'); }
 .delete_icon          { background-image: image_url('refinery/icons/delete.png'); }
 .edit_icon            { background-image: image_url('refinery/icons/application_edit.png'); }
-.reorder_icon         { background-image: image_url('refinery/icons/arrow_up_down.png'); }
+.reorder_icon         { background-image: image_url('refinery/icons/arrow_switch.png'); }
 .reorder_icon.loading { background-image:image_url('refinery/icons/ajax-loader.gif'); }
 .user_comment_icon    { background-image: image_url('refinery/icons/user_comment.png'); }
 .edit_email_icon      { background-image: image_url('refinery/icons/email_edit.png'); }
@@ -1106,12 +1111,12 @@ ul#page_parts_controls img {
   clear:left;
 }
 a#toggle_advanced_options {
-  background: image_url('refinery/icons/page_white_gear.png') no-repeat 0px 3px;
-  padding: 5px 5px 5px 22px;
-  border-bottom: none;
+	background: image_url('refinery/icons/page_white_gear.png') no-repeat 0px 3px;
+	padding: 5px 5px 5px 22px;
+	border-bottom: none;
 }
 a#toggle_advanced_options:hover {
-  border-bottom:1px dotted #727272;
+	border-bottom:1px dotted #727272;
 }
 /* dialog stuff */
 #dialog_frame {
@@ -1123,8 +1128,12 @@ a#toggle_advanced_options:hover {
 .visual_editor_hideables {
   display: none;
 }
-#content .form-actions, .wym_dialog .form-actions, .ui-dialog .form-actions {
-  @include form-actions;
+#content .form-actions, .visual_editor_dialog .form-actions, .ui-dialog .form-actions {
+  position: relative;
+  background-color: #F2F2F2;
+  border: 1px solid #CCCCCC;
+  margin-top: 10px;
+  height: 45px;
 }
 .dialog form {
   margin-bottom: 45px;
@@ -1191,6 +1200,9 @@ ul#image_grid, .pagination_container > ul#image_grid {
   width: 100%;
   padding: 0px;
   margin: 10px 0px 15px 0px;
+}
+.pagination_container > ul#image_grid.pagination_frame {
+  top: 38px;
 }
 ul#image_grid li, .pagination_container > ul#image_grid li {
   position: relative;
@@ -1305,10 +1317,10 @@ input.button, a.button, #content a.button, span.button-wrapper, span.button-wrap
 }
 /* for those pesky IE browsers */
 span.button-wrapper {
-  padding: 0px;
+	padding: 0px;
 }
 span.button-wrapper input {
-  display: inherit;
+	display: inherit;
 }
 /* fixes firefox display */
 input.button {
@@ -1402,7 +1414,11 @@ input.button.close_dialog:active, a.button.close_dialog:active, #content a.butto
 #more_options_field {
   position: relative;
 }
-
+#draft_field {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
 .nothing_selected {
   border-bottom: 1px dotted #727272;
   width: auto;
@@ -1426,8 +1442,6 @@ input.button.close_dialog:active, a.button.close_dialog:active, #content a.butto
 #other_locales li:first-child {
   margin-top: 0px;
 }
-
-
 /* Locale picker */
 #switch_locale_picker {
   margin: 0px;
@@ -1457,15 +1471,20 @@ input.button.close_dialog:active, a.button.close_dialog:active, #content a.butto
 /* AJAX pagination */
 .pagination_container {
   position: relative;
+  overflow: hidden;
+  min-height: 600px;
 }
 .pagination_frame {
   padding: 0;
   width: 100%;
+  height: auto;
+  position: absolute;
+  top: 28px;
   right: auto;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+ 	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
 .pagination_container > div.pagination_frame {
   top: 40px;
@@ -1476,9 +1495,9 @@ input.button.close_dialog:active, a.button.close_dialog:active, #content a.butto
 .pagination_frame.frame_right {
   left: 1000px;
   -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
 .pagination_frame.frame_center {
   left: 0;
@@ -1499,20 +1518,23 @@ a.information:hover {
 .button, #editor_switch a, #editor_switch span {
   @include rounded(6px);
 }
-.visual_editor_box {
-  @include bottom-rounded($standard_rounding);
+#page_container, .visual_editor_box {
+  @include bottom-rounded(5px);
 }
 .visual_editor_iframe iframe {
   @include bottom-rounded(2px);
 }
 .form-actions {
-  @include rounded($standard_rounding);
+  @include rounded(5px);
 }
 .form-actions.form-actions-dialog {
   @include rounded(0px);
 }
+#menu > a {
+  @include top-rounded(5px);
+}
 .ui-tabs .ui-state-default a {
-  @include top-rounded($standard_rounding);
+  @include top-rounded(5px);
 }
 .tooltip, .tooltip span {
   @include rounded(6px);
