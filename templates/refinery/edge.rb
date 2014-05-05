@@ -24,6 +24,9 @@ gem 'refinerycms-acts-as-indexed', ['~> 2.0', '>= 2.0.0']
 # Add support for refinerycms-wymeditor
 gem 'refinerycms-wymeditor', ['~> 1.0', '>= 1.0.0']
 
+# Add support for refinerycms-wymeditor
+gem 'refinerycms-wymeditor', github: 'parndt/refinerycms-wymeditor', branch: 'take-2'
+
 gem 'seo_meta', github: 'parndt/seo_meta', branch: 'master'
 
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'master'
