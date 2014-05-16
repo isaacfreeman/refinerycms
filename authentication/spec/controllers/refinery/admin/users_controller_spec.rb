@@ -85,6 +85,12 @@ describe Refinery::Admin::UsersController, :type => :controller do
         Refinery::User.stub_chain(:includes, :find) { logged_in_user }
         patch "update", :id => logged_in_user.id.to_s, :user => {:plugins => %w(refinery_users some_plugin)}
       end
+
+      it "will update to the plugins supplied" do
+        logged_in_user.should_receive(:update_attributes).with({"plugins" => %w(refinery_users some_plugin)})
+        Refinery::User.stub_chain(:includes, :find) { logged_in_user }
+        patch "update", :id => logged_in_user.id.to_s, :user => {:plugins => %w(refinery_users some_plugin)}
+      end
     end
 
     it_should_behave_like "new, create, update, edit and update actions"
