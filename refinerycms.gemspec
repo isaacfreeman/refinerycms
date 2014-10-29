@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.email             = %q{info@refinerycms.com}
   s.homepage          = %q{http://refinerycms.com}
   s.rubyforge_project = %q{refinerycms}
-  s.authors           = ['Philip Arndt', 'Uģis Ozols']
+  s.authors           = ['Philip Arndt', 'Uģis Ozols', 'Rob Yurkowski']
   s.license           = %q{MIT}
   s.bindir            = 'bin'
   s.executables       = %w(refinerycms)
@@ -24,8 +24,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency    'refinerycms-authentication', version
   s.add_dependency    'refinerycms-core',           version
-  s.add_dependency    'refinerycms-dashboard',      version
   s.add_dependency    'refinerycms-images',         version
   s.add_dependency    'refinerycms-pages',          version
   s.add_dependency    'refinerycms-resources',      version
+
+  s.required_ruby_version = '>= 2.1.2'
 end
