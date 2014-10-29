@@ -1014,11 +1014,13 @@ ul#menu.reordering_menu li a {
   width: 210px;
 }
 .search_form {
+  padding-bottom: 25px;
   position: relative;
   .button, .button-wrapper {
     position: absolute;
     right: 0px;
-    top: 0px;
+    bottom: 0px;
+    margin-right: 0;
   }
 }
 form input[type=submit]:hover {
